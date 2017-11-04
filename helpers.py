@@ -1,5 +1,5 @@
+from __future__ import print_function
 import random
-from random import shuffle
 
 flatten = lambda x,y: x+y
 
@@ -31,9 +31,8 @@ def generate_state(rows, cols):
 		[0. 7, 8]  #r3
 	]
 	'''
-	tiles = range(0, cols * rows)
-	shuffle(tiles)
-	print(tiles)
+	tiles = list(range(0, cols * rows))
+	random.shuffle(tiles)
 	return [tiles[i*cols:(i+1)*cols] for i in range(0, rows)]
 
 def inversion_parity(state):
@@ -59,6 +58,9 @@ def inversion_parity(state):
 def print_path(node):
 	'''
 	Print path from initial state => goal state
+	as 	[0,2,3]
+		[1,5,9]
+		...
 	'''
 	if not node:
 		return	#base case
@@ -66,3 +68,18 @@ def print_path(node):
 		print_path(node._parent)
 		print('\npath cost: {}'.format(node._path_cost))
 		node.pretty_print()
+
+def print_path_flat(node):
+	'''
+	Print path from initial state => goal state
+	as '(1, 2, 3, 0, ...)'
+	'''
+	if not node:
+		return	#base case
+	else:
+		print_path_flat(node._parent)
+		#print('\npath cost: {}'.format(node._path_cost))
+		if node._parent:
+			print(' --> ', end='')
+		print('{}'.format(str(reduce(flatten, node._state))), end='')
+
