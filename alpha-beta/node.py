@@ -6,22 +6,26 @@ class Node(object):
 	Node.utility_map: a look up for the utility value for the terminal node of 
 	each player
 
-	_value:
-	_children:
-	_player:
-	_state:
-	_action:
-	_parent:
+	_value: minimax value of this node
+	_children: 
+	_player: player representing the move *from* this state
+	_state: the game board, such as:
+		{
+			<pile #> : count,
+			...
+		}
+	_action: (pile, move) taken to get here 
+	_parent: the generator of this game state
 
 	'''
 	utility_map = {
-		'player': 0,
+		'human': 0,
 		'computer': 1
 	}
 	next_player = {
 	#	'current': 'next to move'
-		'player' : 'computer',
-		'computer': 'player'
+		'human' : 'computer',
+		'computer': 'human'
 	}
 
 	def generate_successors(self):

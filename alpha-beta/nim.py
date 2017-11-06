@@ -106,6 +106,7 @@ def main():
 		'human' : 'computer'
 	}
 
+	#TODO: Add setup for first move!
 	game_over = False
 	pile, move = 0, 0
 
