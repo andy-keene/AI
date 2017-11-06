@@ -45,3 +45,21 @@ for i in range(0, 10):
 	node.pretty_print()
 
 	node = node.generate_successors()[0]
+
+
+'''
+this state => goal should cost 26 moves
+
+initial_state = [
+		[7,2,4],
+		[5,0,6],
+		[8,3,1]
+	]
+
+	goal_state = [
+		[0,1,2],
+		[3,4,5],
+		[6,7,8]
+	]
+
+'''
