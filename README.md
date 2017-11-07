@@ -10,6 +10,6 @@ Follow the prompts on how to move, i.e. `<pile to choose from> <number of items 
 The program uses alpha-beta pruning to _generate_ a game tree for nim, where the computer will then follow any existing winning strategy in the sub-tree of the current game state.
 
 ### Heuristic-based Search
-In `/search` run the npuzzle program using `python npuzzle.py`. The settings, which are predetermined, will choose 5 randomly generated 8-puzzle states and run A* and Greedy Best First Search on each state using one of three heuristic functions; these are number of tiles out of place, manhattan distance, and euclidean distance. Trial results including the explored and frontier set size, and the solution length will be printed to stdout. 
+In `/search` run the npuzzle program using `python npuzzle.py`. The settings, which are predetermined, will choose 5 randomly generated 8-puzzle states and run A* and Greedy Best First Search on each state using one of three heuristic functions; these are number of tiles out of place, manhattan distance, and euclidean distance. Trial results including the explored and frontier set size, and the solution length will be printed to stdout. Each randomly generated state is ensured to belong to the same subset of n-puzzle states as the goal state.
 
 _write up to be added later_
