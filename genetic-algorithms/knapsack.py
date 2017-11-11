@@ -1,6 +1,6 @@
 #version 0.0: uses list operations for more clarity
 import random
-from pregenerated_bags import knapsack1 as knapsack
+from pregenerated_bags import knapsack2 as knapsack
 
 
 def fitness(items, knapsack, max_weight):
@@ -63,21 +63,21 @@ def natural_selection(population, generations=200, fitness_function=lambda n: 0)
 			gene_to_mutate = random.randint(0, gene_length)
 			second_child[gene_to_mutate] = 1 - second_child[gene_to_mutate]
 
-		#add to population
+		#add to population, and kill the weak
+		#NOTE: this is NOT performant! O(n + nlog(n))
 		population += [first_child, second_child]
-		
-		#kill the weak
 		population = sorted(population, key=fitness_function, reverse=True)
 		population = population[:population_bounds+1]
 
 	return population[0]
 
 def main():
+	#tune parameters (import knapsack to namespace)
 	population_size = 100
-	generations = 5000
-	max_weight = 100
+	generations = 200000
+	max_weight = 20
 	gene_pool = generate_population(len(knapsack.keys()), population_size)
-	fitness_function = lambda n: fitness(n, knapsack, max_weight=100)
+	fitness_function = lambda n: fitness(n, knapsack, max_weight)
 
 	fittest_canidate = natural_selection(gene_pool, generations, fitness_function)
 
@@ -97,8 +97,6 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
-
 
 
 ''''
