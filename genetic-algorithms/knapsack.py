@@ -31,7 +31,7 @@ def generate_population(item_count, population_size):
 		for item in range(0, population_size)
 	]
 
-def natural_selection(population, generations=200, fitness_function=lambda n: 0):
+def natural_selection(population, generations=200, fitness_function=lambda n: 0, mutation_pct=None):
 	'''
 	Runs the the genetic algorithm as follows:
 
@@ -45,41 +45,46 @@ def natural_selection(population, generations=200, fitness_function=lambda n: 0)
 	population_bounds = len(population) - 1 
 	gene_length = len(population[0]) - 1
 
+	#score population
+	population = [(fitness_function(n), n) for n in population]
 	
 	for generation in range(generations):
-		mother = population[random.randint(0, population_bounds)]
-		father = population[random.randint(0, population_bounds)]
+		m_score, mother = population[random.randint(0, population_bounds)]
+		f_score, father = population[random.randint(0, population_bounds)]
 
 		pivot_point = random.randint(1, gene_length-1)
 		first_child = mother[:pivot_point] + father[pivot_point:]
 		second_child = father[:pivot_point] + mother[pivot_point:]
 
-		#mutate 2/3 times
-		if random.randint(0, 3) <= 2: 
+		#mutate according to P(mutation_pct)
+		if mutation_pct(): 
 			gene_to_mutate = random.randint(0, gene_length)
 			first_child[gene_to_mutate] = 1 - first_child[gene_to_mutate]
 
-		if random.randint(0, 3) <= 2: 
+		if mutation_pct(): 
 			gene_to_mutate = random.randint(0, gene_length)
 			second_child[gene_to_mutate] = 1 - second_child[gene_to_mutate]
 
 		#add to population, and kill the weak
 		#NOTE: this is NOT performant! O(n + nlog(n))
-		population += [first_child, second_child]
-		population = sorted(population, key=fitness_function, reverse=True)
+		population += [(fitness_function(first_child), first_child), (fitness_function(second_child), second_child)]
+		population = sorted(population, key=lambda n: n[0], reverse=True)
+		#population = sorted(population, key=fitness_function, reverse=True)
 		population = population[:population_bounds+1]
 
+	print population
 	return population[0]
 
 def main():
 	#tune parameters (import knapsack to namespace)
 	population_size = 100
-	generations = 200000
+	generations = 500000
 	max_weight = 20
+	mutation_pct = lambda: random.randint(0,3) <= 2
 	gene_pool = generate_population(len(knapsack.keys()), population_size)
 	fitness_function = lambda n: fitness(n, knapsack, max_weight)
 
-	fittest_canidate = natural_selection(gene_pool, generations, fitness_function)
+	fittest_canidate = natural_selection(gene_pool, generations, fitness_function, mutation_pct)
 
 	total_value = total_weight = 0
 	for item, included in enumerate(fittest_canidate):
