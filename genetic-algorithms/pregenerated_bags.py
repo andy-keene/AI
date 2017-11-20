@@ -3,7 +3,7 @@ Knapsacks must be defined using numerals for the item 'name' starting from 0
 see examples below
 '''
 
-#max value of 169 with weight of 100
+#max value of 13 with weight of 100
 knapsack1 = {
 	0: {
 		'weight' : 45,
@@ -24,6 +24,9 @@ knapsack1 = {
 }
 
 #max value of 169 w/ max weight of 80
+#max value of 172 w/ max weight of 86
+#max value of 125 w/ max weight of 50
+#max value of 61 w/ max weight of 20
 knapsack2 = {
 	0: {
 		'weight': 5,

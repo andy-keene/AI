@@ -75,7 +75,7 @@ def main():
 	#tune parameters (import knapsack to namespace)
 	population_size = 100
 	generations = 200000
-	max_weight = 20
+	max_weight = 80
 	gene_pool = generate_population(len(knapsack.keys()), population_size)
 	fitness_function = lambda n: fitness(n, knapsack, max_weight)
 
